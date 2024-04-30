@@ -8,6 +8,21 @@ module.exports = {
         neutralblue: "#005573",
         mineralgreen: "#00aa9b",
         accentred: "#f04641",
+        primary: "#161622",
+        secondary: {
+          DEFAULT: "#78a4ff",
+          100: "#5f93ff",
+          200: "#5f93ff",
+          300: "#9290C3",
+        },
+        black: {
+          DEFAULT: "#000",
+          100: "#1E1E2D",
+          200: "#232533",
+        },
+        gray: {
+          100: "#CDCDE0",
+        },
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],

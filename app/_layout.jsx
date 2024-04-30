@@ -3,6 +3,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 
+//prevent splash screen from auto hiding before acide loading is complete
 SplashScreen.preventAutoHideAsync();
 
 const Layout = () => {
@@ -18,6 +19,8 @@ const Layout = () => {
     "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
   });
 
+  //recall this fonction whenver fonts are loaded or there is an error
+  //when fonts are loaded hide the native splash screen immedidtrly
   useEffect(() => {
     if (error) throw error;
     if (fontsLoaded) SplashScreen.hideAsync();
@@ -28,6 +31,8 @@ const Layout = () => {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }} /> */}
     </Stack>
   );
 };

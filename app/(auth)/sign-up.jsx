@@ -7,10 +7,11 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link } from "expo-router";
 
-const SignIn = () => {
+const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
+    password: "",
     email: "",
     password: "",
   });
@@ -57,8 +58,15 @@ const SignIn = () => {
           />
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Sign in to ISIAccess
+            Sign Up to Aora
           </Text>
+
+          <FormField
+            title="Username"
+            value={form.username}
+            handleChangeText={(e) => setForm({ ...form, username: e })}
+            otherStyles="mt-10"
+          />
 
           <FormField
             title="Email"
@@ -76,7 +84,7 @@ const SignIn = () => {
           />
 
           <CustomButton
-            title="Sign In"
+            title="Sign Up"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
@@ -84,13 +92,13 @@ const SignIn = () => {
 
           <View className="flex justify-center pt-5 flex-row gap-2">
             <Text className="text-base text-gray-100 font-pregular">
-              Don't have an account?
+              Have an account already?
             </Text>
             <Link
-              href="/sign-up"
+              href="/sign-in"
               className="text-base font-psemibold text-secondary"
             >
-              Signup
+              Sign in
             </Link>
           </View>
         </View>
@@ -99,4 +107,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
