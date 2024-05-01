@@ -1,17 +1,37 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
 
-import { getPostbyCategory } from "../../lib/appwrite";
+import {
+  getAllPosts,
+  getPostbyCategory,
+  updateCategory,
+} from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 import PostCard from "../../components/PostCard";
 import useAppwrite from "../../lib/useAppwrite";
 import EmptyState from "../../components/EmptyState";
+import { useState } from "react";
 
 const Bookmark = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
-  const { data: posts } = useAppwrite(() => getPostbyCategory(user.category));
+  const { data: posts, refetch } = useAppwrite(() =>
+    getPostbyCategory(user.category)
+  );
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
   console.log(posts);
 
   return (
@@ -45,6 +65,9 @@ const Bookmark = () => {
             </View>
           </View>
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </SafeAreaView>
   );

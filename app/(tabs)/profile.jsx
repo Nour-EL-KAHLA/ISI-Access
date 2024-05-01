@@ -39,17 +39,39 @@ import { View, Image, FlatList, TouchableOpacity } from "react-native";
 
 import out from "../../assets/icons/logout.png";
 import useAppwrite from "../../lib/useAppwrite";
-import { getUserPosts, signOut } from "../../lib/appwrite";
+import { getUserPosts, signOut, updateCategory } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 import PostCard from "../../components/PostCard";
 import InfoBox from "../../components/InfoBox";
 import EmptyState from "../../components/EmptyState";
+import { useState } from "react";
+import CustomButton from "../../components/CustomButton";
 
 const Profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
-  const { data: posts } = useAppwrite(() => getUserPosts(user.$id));
+  // const { data: posts } = useAppwrite(() => getUserPosts(user.$id));
+  const [isSubmitting, setSubmitting] = useState(false);
 
+  // const submit = async () => {
+  //   await updateCategory("IDISC").then((res) => setUser(res));
+  // };
+  const submit = async () => {
+    // if (form.username === "" || form.email === "" || form.password === "") {
+    //   Alert.alert("Error", "Please fill in all fields");
+    // }
+
+    setSubmitting(true);
+    try {
+      await updateCategory("IRS").then((res) => setUser(res));
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+  // setSubmitting(true);
+  console.log(user);
   const logout = async () => {
     await signOut();
     setUser(null);
@@ -61,7 +83,7 @@ const Profile = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
-        data={posts}
+        // data={posts}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
           <PostCard
@@ -101,11 +123,17 @@ const Profile = () => {
               titleStyles="text-lg"
             />
 
-            <InfoBox
+            {/* <InfoBox
               title={posts.length || 0}
               subtitle="Posts"
               titleStyles="text-xl"
               containerStyles="mt-2"
+            /> */}
+            <CustomButton
+              title="cat"
+              handlePress={submit}
+              containerStyles="mt-7"
+              isLoading={isSubmitting}
             />
           </View>
         )}
