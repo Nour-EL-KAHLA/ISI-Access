@@ -14,13 +14,15 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "package": "com.youpi.ISIAccess"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.youpi.ISIAccess"
     },
     "web": {
       "favicon": "./assets/favicon.png"

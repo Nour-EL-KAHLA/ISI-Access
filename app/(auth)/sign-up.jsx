@@ -1,40 +1,34 @@
-import { Dimensions, Image, ScrollView, Text, View } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
+import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
-import image from "../../constants/image";
+import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
+import isiaccess from "../../assets/images/isiaccess.png";
+// import { image } from "../../constants";
+import { createUser } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
-
 const SignUp = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { setUser, setIsLogged } = useGlobalContext();
   const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    password: "",
+    username: "",
     email: "",
     password: "",
   });
 
   const submit = async () => {
-    if (form.email === "" || form.password === "") {
+    if (form.username === "" || form.email === "" || form.password === "") {
       Alert.alert("Error", "Please fill in all fields");
     }
+
     setSubmitting(true);
-    const handleSubmit = () => {
-      setIsLoading(true);
-      // API call
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-    };
     try {
-      await signIn(form.email, form.password);
-      const result = await getCurrentUser();
+      const result = await createUser(form.email, form.password, form.username);
+
       setUser(result);
       setIsLogged(true);
 
-      Alert.alert("Success", "User signed in successfully");
       router.replace("/home");
     } catch (error) {
       Alert.alert("Error", error.message);
@@ -42,17 +36,18 @@ const SignUp = () => {
       setSubmitting(false);
     }
   };
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
         <View
-          className="w-full flex justify-center min-h-[85vh] px-4 my-6"
+          className="w-full flex justify-center h-full px-4 my-6"
           style={{
             minHeight: Dimensions.get("window").height - 100,
           }}
         >
           <Image
-            source={image.isiaccess}
+            source={isiaccess}
             resizeMode="contain"
             className="w-[115px] h-[34px]"
           />
@@ -98,7 +93,7 @@ const SignUp = () => {
               href="/sign-in"
               className="text-base font-psemibold text-secondary"
             >
-              Sign in
+              Login
             </Link>
           </View>
         </View>

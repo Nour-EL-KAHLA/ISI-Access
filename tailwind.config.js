@@ -10,9 +10,9 @@ module.exports = {
         accentred: "#f04641",
         primary: "#161622",
         secondary: {
-          DEFAULT: "#78a4ff",
-          100: "#5f93ff",
-          200: "#5f93ff",
+          DEFAULT: "#bbe7e6",
+          100: "#a8e0df",
+          200: "#95d9d8",
           300: "#9290C3",
         },
         black: {

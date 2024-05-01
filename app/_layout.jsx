@@ -2,7 +2,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
-
+import GlobalProvider from "../context/GlobalProvider";
+import "react-native-url-polyfill/auto";
 //prevent splash screen from auto hiding before acide loading is complete
 SplashScreen.preventAutoHideAsync();
 
@@ -28,12 +29,15 @@ const Layout = () => {
 
   if (!fontsLoaded && !error) return null;
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }} /> */}
-    </Stack>
+    <GlobalProvider>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }} /> */}
+      </Stack>
+    </GlobalProvider>
   );
 };
 

@@ -1,17 +1,19 @@
 import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import image from "../constants/image";
 import CustomButton from "../components/CustomButton";
 import { StatusBar } from "expo-status-bar";
-import { LinearGradient } from "expo-linear-gradient";
 import { Redirect, router } from "expo-router";
 import isiaccess from "../assets/images/isiaccess.png";
 import girls from "../assets/images/girls.png";
 import path from "../assets/images/path.png";
-export default function App() {
+import { useGlobalContext } from "../context/GlobalProvider";
+const Welcome = () => {
+  const { loading, isLogged } = useGlobalContext();
+  if (!loading && isLogged) return <Redirect href="/home" />;
   return (
     <SafeAreaView className="bg-primary h-full">
       {/* contentContainerStyle={{ height: "100%" }} so even small phones can get the full conetent with scrolling*/}
+
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="w-full flex justify-center items-center h-full px-4">
           <Image
@@ -47,4 +49,5 @@ export default function App() {
       <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
-}
+};
+export default Welcome;

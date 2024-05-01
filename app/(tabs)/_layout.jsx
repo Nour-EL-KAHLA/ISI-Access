@@ -30,7 +30,7 @@ const TabsLayout = () => {
     <>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "#FFA001",
+          tabBarActiveTintColor: "#bbe7e6",
           tabBarInactiveTintColor: "#9290C3",
           tabBarShowLabel: false,
           tabBarStyle: {
@@ -102,6 +102,8 @@ const TabsLayout = () => {
           }}
         />
       </Tabs>
+
+      <StatusBar backgroundColor="#161622" style="light" />
     </>
   );
 };

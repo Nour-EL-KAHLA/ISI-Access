@@ -1,11 +1,63 @@
-import { View, Text } from "react-native";
-import React from "react";
-
+import { View, Text, FlatList, Image, RefreshControl } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import isi from "../../assets/images/isi.png";
+import SearchInput from "../../components/SearchInput";
+import EmptyState from "../../components/EmptyState";
 const Home = () => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    // await refetch();
+    setRefreshing(false);
+  };
+
+  // one flatlist
+  // with list header
+  // and horizontal flatlist
+
+  //  we cannot do that with just scrollview as there's both horizontal and vertical scroll (two flat lists, within trending)
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <SafeAreaView className="bg-primary h-full">
+      <FlatList
+        data={[{ id: 1 }, { id: 2 }, { id: 3 }]}
+        keyExtractor={(item) => item.$id}
+        renderItem={({ item }) => (
+          <Text className="text-3xl text-white">{item.id}</Text>
+        )}
+        ListHeaderComponent={() => (
+          <View className="flex my-6 px-4 space-y-6">
+            <View className="flex justify-between items-start flex-row mb-6">
+              <View>
+                <Text className="font-pmedium text-sm text-gray-100">
+                  Welcome Back
+                </Text>
+                <Text className="text-2xl font-psemibold text-white">Nour</Text>
+              </View>
+
+              <View className="mt-1.5">
+                <Image source={isi} className="w-9 h-10" resizeMode="contain" />
+              </View>
+            </View>
+
+            <SearchInput />
+          </View>
+        )}
+        ListEmptyComponent={() => (
+          <EmptyState
+            title="No Posts Found"
+            subtitle="No related posts created yet"
+          />
+        )}
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        // }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      />
+    </SafeAreaView>
   );
 };
 
