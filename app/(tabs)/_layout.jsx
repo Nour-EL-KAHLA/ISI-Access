@@ -4,8 +4,9 @@ import { Image, Text, View } from "react-native";
 
 import home from "../../assets/icons/home.png";
 import bookmark from "../../assets/icons/bookmark.png";
-import plus from "../../assets/icons/plus.png";
+
 import profile from "../../assets/icons/profile.png";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -26,6 +27,9 @@ const TabIcon = ({ icon, color, name, focused }) => {
   );
 };
 const TabsLayout = () => {
+  const { loading, isLogged } = useGlobalContext();
+
+  if (!loading && !isLogged) return <Redirect href="/sign-in" />;
   return (
     <>
       <Tabs
@@ -71,21 +75,7 @@ const TabsLayout = () => {
             ),
           }}
         />
-        <Tabs.Screen
-          name="create"
-          options={{
-            title: "Create",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={plus}
-                color={color}
-                name="Create"
-                focused={focused}
-              />
-            ),
-          }}
-        />
+
         <Tabs.Screen
           name="profile"
           options={{

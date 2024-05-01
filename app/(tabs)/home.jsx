@@ -17,7 +17,7 @@ const Home = () => {
     await refetch();
     setRefreshing(false);
   };
-  console.log(posts);
+
   // one flatlist
   // with list header
   // and horizontal flatlist
@@ -34,6 +34,7 @@ const Home = () => {
             creator={item.creator.username}
             attachment={item.attachment}
             avatar={item.creator.avatar}
+            image={item.image}
           ></PostCard>
         )}
         ListHeaderComponent={() => (

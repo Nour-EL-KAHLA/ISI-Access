@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
 import menu from "../assets/icons/menu.png";
 
-const PostCard = ({ title, creator, avatar, attachment, video }) => {
+const PostCard = ({ title, creator, avatar, attachment, image }) => {
   const [play, setPlay] = useState(false);
 
   return (
@@ -29,12 +29,31 @@ const PostCard = ({ title, creator, avatar, attachment, video }) => {
             >
               {creator}
             </Text>
+            <TouchableOpacity onPress={() => Linking.openURL(attachment)}>
+              <Text
+                className="font-psemibold text-base
+               text-[#ff8aa8]"
+              >
+                URL
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
-        <View className="pt-2">
-          <Image source={menu} className="w-5 h-5" resizeMode="contain" />
+
+        <View className="pt-8">
+          <TouchableOpacity onPress={() => Linking.openURL(attachment)}>
+            <Image source={menu} className="w-5 h-5" resizeMode="contain" />
+          </TouchableOpacity>
         </View>
       </View>
+      {image && (
+        <TouchableOpacity className="w-full h-60 rounded-xl mt-3 relative justify-center items-center">
+          <Image
+            className="w-full h-60 rounded-xl mt-3"
+            source={{ uri: image }}
+          ></Image>
+        </TouchableOpacity>
+      )}
 
       {/* <View className="flex flex-row gap-3 items-start">
         <View className="flex justify-center items-center flex-row flex-1">
