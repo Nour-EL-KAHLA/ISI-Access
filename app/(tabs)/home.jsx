@@ -4,15 +4,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import isi from "../../assets/images/isi.png";
 import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
+import useAppwrite from "../../lib/useAppwrite";
+import { getAllPosts } from "../../lib/appwrite";
+import PostCard from "../../components/PostCard";
 const Home = () => {
+  const { data: posts, refetch } = useAppwrite(getAllPosts);
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
     setRefreshing(true);
-    // await refetch();
+    await refetch();
     setRefreshing(false);
   };
-
+  console.log(posts);
   // one flatlist
   // with list header
   // and horizontal flatlist
@@ -21,10 +26,15 @@ const Home = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
-        data={[{ id: 1 }, { id: 2 }, { id: 3 }]}
+        data={posts}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
-          <Text className="text-3xl text-white">{item.id}</Text>
+          <PostCard
+            title={item.Title}
+            creator={item.creator.username}
+            attachment={item.attachment}
+            avatar={item.creator.avatar}
+          ></PostCard>
         )}
         ListHeaderComponent={() => (
           <View className="flex my-6 px-4 space-y-6">
@@ -50,9 +60,6 @@ const Home = () => {
             subtitle="No related posts created yet"
           />
         )}
-        // refreshControl={
-        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        // }
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
