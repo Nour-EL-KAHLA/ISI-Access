@@ -36,6 +36,7 @@ const Home = () => {
             attachment={item.attachment}
             avatar={item.creator.avatar}
             image={item.image}
+            description={item.description}
           ></PostCard>
         )}
         ListHeaderComponent={() => (

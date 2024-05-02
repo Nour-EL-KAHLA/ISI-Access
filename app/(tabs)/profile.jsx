@@ -154,18 +154,18 @@ const Profile = () => {
             )}
             <View className="w-full  mt-22  flex flex-row justify-center items-center">
               <Category name="1IDL" />
-              <Category name="ISEOC" />
+              <Category name="1ISEOC" />
               <Category name="1IDISC" />
             </View>
             <View className="w-full  mt-22  flex flex-row justify-center items-center">
               <Category name="2IDL" />
-              <Category name="3IDL" />
+              <Category name="2ISEOC" />
               <Category name="2IDISC" />
             </View>
             <View className="w-full   mt-22  flex flex-row justify-center items-center">
               <Category name="2ISEOC" />
-              <Category name="3IDISC" />
               <Category name="3ISEOC" />
+              <Category name="3IDISC" />
             </View>
           </View>
         )}

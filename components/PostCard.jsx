@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
-import menu from "../assets/icons/menu.png";
+import file from "../assets/icons/file.png";
 
-const PostCard = ({ title, creator, avatar, attachment, image }) => {
+const PostCard = ({
+  title,
+  creator,
+  avatar,
+  attachment,
+  image,
+  description,
+}) => {
   const [play, setPlay] = useState(false);
 
   return (
@@ -29,22 +36,24 @@ const PostCard = ({ title, creator, avatar, attachment, image }) => {
             >
               {creator}
             </Text>
-            <TouchableOpacity onPress={() => Linking.openURL(attachment)}>
+
+            {/* <TouchableOpacity onPress={() => Linking.openURL(attachment)}>
               <Text
                 className="font-psemibold text-base
                text-[#ff8aa8]"
               >
                 URL
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
-
-        <View className="pt-8">
-          <TouchableOpacity onPress={() => Linking.openURL(attachment)}>
-            <Image source={menu} className="w-5 h-5" resizeMode="contain" />
-          </TouchableOpacity>
-        </View>
+        {attachment && (
+          <View className="pt-4">
+            <TouchableOpacity onPress={() => Linking.openURL(attachment)}>
+              <Image source={file} className="w-5 h-5" resizeMode="contain" />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       {image && (
         <TouchableOpacity className="w-full h-60 rounded-xl mt-3 relative justify-center items-center">
@@ -54,7 +63,9 @@ const PostCard = ({ title, creator, avatar, attachment, image }) => {
           ></Image>
         </TouchableOpacity>
       )}
-
+      <Text className="w-full text-gray-300 rounded-xl text-xs mt-3 relative justify-center items-center">
+        {description}
+      </Text>
       {/* <View className="flex flex-row gap-3 items-start">
         <View className="flex justify-center items-center flex-row flex-1">
           <View className="w-[46px] h-[46px] rounded-lg border border-secondary flex justify-center items-center p-0.5">
