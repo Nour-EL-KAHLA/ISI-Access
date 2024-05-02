@@ -4,10 +4,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        strongblue: "#232d4b",
-        neutralblue: "#005573",
-        mineralgreen: "#00aa9b",
-        accentred: "#f04641",
         primary: "#161622",
         secondary: {
           DEFAULT: "#bbe7e6",

@@ -27,6 +27,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
   );
 };
 const TabsLayout = () => {
+  const { user, setUser, setIsLogged } = useGlobalContext();
   const { loading, isLogged } = useGlobalContext();
 
   if (!loading && !isLogged) return <Redirect href="/sign-in" />;
@@ -69,7 +70,7 @@ const TabsLayout = () => {
               <TabIcon
                 icon={bookmark}
                 color={color}
-                name="Bookmark"
+                name={user?.category ? user.category : "Class"}
                 focused={focused}
               />
             ),

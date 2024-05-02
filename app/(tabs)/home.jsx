@@ -7,11 +7,12 @@ import EmptyState from "../../components/EmptyState";
 import useAppwrite from "../../lib/useAppwrite";
 import { getAllPosts } from "../../lib/appwrite";
 import PostCard from "../../components/PostCard";
+import { useGlobalContext } from "../../context/GlobalProvider";
 const Home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
 
   const [refreshing, setRefreshing] = useState(false);
-
+  const { user } = useGlobalContext();
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch();
@@ -44,7 +45,9 @@ const Home = () => {
                 <Text className="font-pmedium text-sm text-gray-100">
                   Welcome Back
                 </Text>
-                <Text className="text-2xl font-psemibold text-white">Nour</Text>
+                <Text className="text-2xl font-psemibold text-white">
+                  {user?.username}
+                </Text>
               </View>
 
               <View className="mt-1.5">

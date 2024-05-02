@@ -50,28 +50,57 @@ import CustomButton from "../../components/CustomButton";
 
 const Profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
-  // const { data: posts } = useAppwrite(() => getUserPosts(user.$id));
+  const { data: posts } = useAppwrite(() => getUserPosts(user.$id));
   const [isSubmitting, setSubmitting] = useState(false);
-
   // const submit = async () => {
   //   await updateCategory("IDISC").then((res) => setUser(res));
   // };
-  const submit = async () => {
-    // if (form.username === "" || form.email === "" || form.password === "") {
-    //   Alert.alert("Error", "Please fill in all fields");
-    // }
 
+  // const submit = async (categ) => {
+  //   // if (form.username === "" || form.email === "" || form.password === "") {
+  //   //   Alert.alert("Error", "Please fill in all fields");
+  //   // }
+
+  //   setSubmitting(true);
+  //   try {
+  //     await updateCategory(cati).then((res) => setUser(res));
+  //   } catch (error) {
+  //     Alert.alert("Error", error.message);
+  //   } finally {
+  //     setSubmitting(false);
+  //   }
+  // };
+  const onSubmit = async (categ) => {
     setSubmitting(true);
     try {
-      await updateCategory("IRS").then((res) => setUser(res));
+      await updateCategory(categ).then((res) => setUser(res));
     } catch (error) {
       Alert.alert("Error", error.message);
     } finally {
       setSubmitting(false);
     }
   };
+  const Category = (props) => {
+    const { name } = props;
+
+    const handlePress = () => {
+      onSubmit(name); // This will invoke onSubmit with the category name
+    };
+    const cat = user?.category;
+    return (
+      <CustomButton
+        textStyles={`text-lg `}
+        title={name}
+        handlePress={handlePress} // Pass the function reference, not the result of onSubmit
+        containerStyles="mt-14 w-24 px-4 mx-1 my-4 bg-[#ff8aa8] min-h-[30px]"
+        isLoading={isSubmitting}
+        selected={name == cat}
+      />
+    );
+  };
+
   // setSubmitting(true);
-  console.log(user);
+  console.log("ouiii");
   const logout = async () => {
     await signOut();
     setUser(null);
@@ -83,7 +112,7 @@ const Profile = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
-        // data={posts}
+        data={posts}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
           <PostCard
@@ -94,12 +123,6 @@ const Profile = () => {
             image={item.image}
           />
         )}
-        ListEmptyComponent={() => (
-          <EmptyState
-            title="No posts Found"
-            subtitle="No posts found for this profile"
-          />
-        )}
         ListHeaderComponent={() => (
           <View className="w-full flex justify-center items-center mt-6 mb-12 px-4">
             <TouchableOpacity
@@ -108,7 +131,6 @@ const Profile = () => {
             >
               <Image source={out} resizeMode="contain" className="w-6 h-6" />
             </TouchableOpacity>
-
             <View className="w-16 h-16 border border-secondary rounded-lg flex justify-center items-center">
               <Image
                 source={{ uri: user?.avatar }}
@@ -116,25 +138,35 @@ const Profile = () => {
                 resizeMode="cover"
               />
             </View>
-
             <InfoBox
               title={user?.username}
               containerStyles="mt-5"
               titleStyles="text-lg"
             />
 
-            {/* <InfoBox
-              title={posts.length || 0}
-              subtitle="Posts"
-              titleStyles="text-xl"
-              containerStyles="mt-2"
-            /> */}
-            <CustomButton
-              title="cat"
-              handlePress={submit}
-              containerStyles="mt-7"
-              isLoading={isSubmitting}
-            />
+            {posts.length != 0 && (
+              <InfoBox
+                title={posts.length || 0}
+                subtitle="Posts"
+                titleStyles="text-xl"
+                containerStyles="mt-2"
+              />
+            )}
+            <View className="w-full  mt-22  flex flex-row justify-center items-center">
+              <Category name="1IDL" />
+              <Category name="ISEOC" />
+              <Category name="1IDISC" />
+            </View>
+            <View className="w-full  mt-22  flex flex-row justify-center items-center">
+              <Category name="2IDL" />
+              <Category name="3IDL" />
+              <Category name="2IDISC" />
+            </View>
+            <View className="w-full   mt-22  flex flex-row justify-center items-center">
+              <Category name="2ISEOC" />
+              <Category name="3IDISC" />
+              <Category name="3ISEOC" />
+            </View>
           </View>
         )}
       />
