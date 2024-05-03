@@ -7,13 +7,17 @@ import isiaccess from "../assets/images/isiaccess.png";
 import girls from "../assets/images/girls.png";
 import path from "../assets/images/path.png";
 import { useGlobalContext } from "../context/GlobalProvider";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["Warning: ..."]);
+
+LogBox.ignoreAllLogs();
+
 const Welcome = () => {
   const { loading, isLogged } = useGlobalContext();
   if (!loading && isLogged) return <Redirect href="/home" />;
   return (
     <SafeAreaView className="bg-primary h-full">
-      {/* contentContainerStyle={{ height: "100%" }} so even small phones can get the full conetent with scrolling*/}
-
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="w-full flex justify-center items-center h-full px-4">
           <Image
